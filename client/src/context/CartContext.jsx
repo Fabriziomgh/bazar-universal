@@ -20,7 +20,6 @@ export const CartProvider = ({ children }) => {
    const removeToCart = (id) => {
       setCart((cart) => cart.filter((item) => item.id !== id));
    };
-   console.log(cart);
 
    return (
       <CartContext.Provider
