@@ -21,10 +21,9 @@ const useProducts = () => {
       try {
          setProducts([]);
          setLoading(true);
-         const response = await getProductBySearch(search);
-         const data = await response.json();
-         setProducts(data.products);
-         setCategory(countProductCategory(data.products));
+         const res = await getProductBySearch(search);
+         setProducts(res.data.products);
+         setCategory(countProductCategory(res.data.products));
          setSearch(search);
       } catch (error) {
          console.log(error);

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const CartButton = () => {
    const { cart } = useCartContext();
    return (
-      <div>
+      <div className="lg:block p-4 flex items-center justify-center">
          <Link
             to="/cart"
             type="button"

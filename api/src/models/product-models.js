@@ -14,7 +14,12 @@ const productSchema = new Schema({
    thumbnail: { type: String, required: true },
    images: { type: [String], required: true },
 });
-productSchema.index({ product: 'text', brand: 'text', category: 'text' });
+productSchema.index({
+   product: 'text',
+   brand: 'text',
+   category: 'text',
+   description: 'text',
+});
 const Product = mongoose.model('Product', productSchema);
 
 export default Product;

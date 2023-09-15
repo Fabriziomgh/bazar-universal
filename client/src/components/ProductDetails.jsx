@@ -11,11 +11,11 @@ const ProductDetails = () => {
    const [picture, setPicture] = useState('');
    const [loading, setLoading] = useState(false);
    const { id } = useParams();
+
    useEffect(() => {
       setLoading(true);
       getProductById(id)
-         .then((res) => res.json())
-         .then((data) => {
+         .then(({ data }) => {
             setProduct(data);
             setPicture(data.thumbnail);
          })
@@ -33,15 +33,15 @@ const ProductDetails = () => {
 
    return (
       <div className="mx-auto">
-         <div className="flex justify-evenly p-4">
-            <picture className="">
+         <div className="flex lg:flex-row flex-col justify-evenly p-4 gap-4 lg:gap-0">
+            <picture className="lg:mx-0 mx-auto">
                <img
                   src={picture}
                   alt={product?.product}
                   className="rounded-full shadow  w-56 h-52"
                />
             </picture>
-            <div className="grid grid-cols-2 gap-2 ">
+            <div className="grid grid-cols-3 lg:grid-cols-2 gap-2 ">
                {product?.images?.map((image, i) => (
                   <picture
                      onClick={() => setPicture(image)}

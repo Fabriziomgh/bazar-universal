@@ -6,19 +6,32 @@ export const getProducts = async (req, res) => {
       const queryObj = { ...req.query };
       const excludedFields = ['page', 'limit', 'search'];
       excludedFields.forEach((el) => delete queryObj[el]);
-
+      console.log(req.params, req.query);
       const { page = 1, limit = 10 } = req.query;
       const skip = (page - 1) * limit;
 
-      //query
       const q = req.query.search
-         ? { $text: { $search: req.query.search } }
-         : queryObj;
+         ? {
+              $text: {
+                 $search: req.query.search,
+                 $caseSensitive: false,
+                 $diacriticSensitive: false,
+              },
+           }
+         : {};
 
-      const query = Product.find(q).sort({ _id: 1 }).skip(skip).limit(limit);
+      const query = Product.find(q).skip(skip).limit(limit);
 
       const products = await query.lean();
+
+      if (!products.length) {
+         return res.status(404).json({
+            message: 'No hay productos que coincidan con la búsqueda',
+         });
+      }
+
       const productsTransformed = transformedData(products);
+
       const totalProducts = await Product.countDocuments(q);
       const totalPages = Math.ceil(totalProducts / limit);
 

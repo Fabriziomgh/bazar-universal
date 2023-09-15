@@ -1,7 +1,14 @@
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+   baseURL: 'http://localhost:3000/api/products',
+   timeout: 10000,
+});
+
 export const getProductBySearch = (search) => {
-   return fetch(`http://localhost:3000/api/products?search=${search}`);
+   return axiosInstance.get(`/?search=${search}`);
 };
 
 export const getProductById = (id) => {
-   return fetch(`http://localhost:3000/api/products/${id}`);
+   return axiosInstance.get(`/${id}`);
 };
